@@ -1,0 +1,128 @@
+﻿@model ClothBazar.Entities.Drug
+
+@{
+    /**/
+
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+<form id="editTable">
+    <input type="hidden" name="Id" value="@Model.Id"></input>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" name="Name" value="@Model.Name"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>DespensaryAmount</label>
+                <input class="form-control" name="DespensaryAmount" value="@Model.DespensaryAmount"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>StoreHouseAmount</label>
+                <input class="form-control" name="StoreHouseAmount" value="@Model.StoreHouseAmount"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>StudentSeriveAmount</label>
+                <input class="form-control" name="StudentSeriveAmount" value="@Model.StudentSeriveAmount"/><br />
+            </div>
+
+                    <div class="form-group">
+                <label>StafftSeriveAmount</label>
+                <input class="form-control" name="StafftSeriveAmount" value="@Model.StafftSeriveAmount"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>PricePerTab</label>
+                <input class="form-control" name="PricePerTab" value="@Model.PricePerTab"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description" value="@Model.Description"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>ProductionDate</label>
+                <input class="form-control" name="ProductionDate" value="@Model.ProductionDate"/><br />
+            </div>
+
+            <div class="form-group">
+                <label>ExpireDate</label>
+                <input class="form-control" name="ExpireDate" value="@Model.ExpireDate"/><br />
+            </div>
+
+
+
+
+
+            <button id="updatebtn" class="btn btn-primary" type="button">Update</button>
+            <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+
+
+
+    </div>
+
+    @*<div class="row">
+
+        </div>
+        <label>Name</label>
+        <input name="name" value="@Model.name" /><br />
+
+        <label>Description</label>
+        <input name="Description" value="@Model.Description" /><br />
+
+        <label>Price</label>
+        <input name="Price" value="@Model.price" /><br />
+
+        <label>ImageUrl</label>
+        <input name="imgUrl" id="imageURL" type="hidden"  />
+        <input type="file" accept=".png,.jpg" name="image" id="imageUpload" /><br />
+
+        <button id="updatebtn" type="button">Update</button>
+        <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+
+
+
+        <div class="thumb">
+            <img class="img-thumbnail img-fluid" id="productImage" name="imgUrl" src="@img" />
+        </div>*@
+</form>
+
+<script>
+
+
+    $("#updatebtn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: '/Drug/Edit',
+            data: $("#editTable").serialize()
+        })
+            .done(function (response) {
+                alert(response);
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("");
+                focusAction("tableContainer");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+    $("#cancelbtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>

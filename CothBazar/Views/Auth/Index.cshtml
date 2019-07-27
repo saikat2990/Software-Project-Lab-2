@@ -1,0 +1,60 @@
+﻿
+@{
+
+    ViewBag.Title = "LoginCreate";
+}
+
+<h2>Student LogIn</h2>
+
+<form id="createTable">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" name="Name" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" name="Email" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" name="Password" /><br />
+            </div>
+
+
+
+            <button id="savebtn" class="btn btn-primary" type="button">LogIn</button>
+            <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+
+    </div>
+
+</form>
+
+<script>
+
+    $("#savebtn").click(function () {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: '/Auth/Index',
+            data: $("#createTable").serialize()
+        })
+        .done(function (response) {
+            alert(response);
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+
+</script>

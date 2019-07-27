@@ -1,0 +1,128 @@
+﻿
+@model ClothBazar.Entities.DrugClass
+
+
+@{
+    ViewBag.Title = "ApprovalByStoreAndDatabase";
+    var imageUrl = "/Content/images/pattern/3.png";
+    var v = Model.drugs;
+}
+<h2>Now it is tranferred from store house to dispensaries</h2>
+@*<h2>Drug Create</h2>
+
+    <form id="createTable">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @*<div class="form-group">
+                    <label>Date</label>
+                    <input class="form-control" name="Date" /><br />
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>@Model.Date</label>
+                    </div>
+                </div>
+
+                @foreach (var val in Model.drugs)
+                {
+
+                    @*<div class="form-group">
+                        <label>@val.Name</label>
+                        <input class="form-control" name="ServiceAmount" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <label>@val.Name</label>
+                            <input value="@val.ServiceAmount"/>
+                        </div>
+                    </div>
+
+                }
+
+
+                <button id="savebtn" class="btn btn-primary" type="button">Create</button>
+                <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+            </div>
+
+
+
+        </div>
+
+    </form>*@
+
+@using (Html.BeginForm("StoreToDispesaries", "Drug"))
+{
+    @Html.LabelFor(x => x.Date)
+    @Html.TextBoxFor(x => x.Date)
+
+    for (var i = 0; i < Model.drugs.Count; i++)
+    {
+
+
+        @Html.LabelFor(x => x.drugs[i].Name)
+        @Html.TextBoxFor(x => x.drugs[i].Name)
+
+
+        @Html.LabelFor(x => x.drugs[i].ServiceAmount)
+        @Html.TextBoxFor(x => x.drugs[i].ServiceAmount)
+    }
+
+    
+}
+
+@*<form >
+
+        <label>Catagories</label>
+        <select name="catagoryId">
+
+            @foreach (var catagory in Model) {
+                <option value="@catagory.Id">@catagory.name</option>
+            }
+
+        </select>
+
+        <label>Name</label>
+        <input name="name" /><br />
+
+        <label>Description</label>
+        <input name="Description" /><br />
+
+        <label>Price</label>
+        <input name="Price" /><br />
+
+        <button id="savebtn" type="button">Create</button>
+    </form>*@
+
+<script>
+            //debugger
+            //$("#savebtn").click(function () {
+            //    var
+            //    $.ajax({
+            //        type: "POST",
+            //        url: '/Drug/StoreToDispesaries',
+            //        data:
+            //    })
+            //    .done(function (response) {
+            //        alert(response);
+            //        $("#tableContainer").html(response);
+            //        $("#actionContainer").html("");
+            //        focusAction("tableContainer");
+            //    })
+            //    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            //        alert("Fail");
+            //    });
+            //});
+
+            //$("#cancelbtn").click(function () {
+            //    $("#actionContainer").html("");
+            //    focusAction("tableContainer");
+            //});
+
+</script>
+
+
+

@@ -1,0 +1,27 @@
+﻿@model ClothBazar.Entities.CheckViewModel
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+@if (Model.cartProducts != null && Model.cartProducts.Count > 0)
+{
+    <div>
+        @foreach (var product in Model.cartProducts) {
+            var productQuantity = Model.cartProductds.Where(x => x == product.Id).Count();
+            <div>
+                Name: @product.name - Price: @product.price - Quantity:@productQuantity - totalPrice : @(product.price* productQuantity)
+            </div>
+        }
+    </div>
+
+    <div>
+        Total Bill: @Model.cartProducts.Sum(x=> x.price * Model.cartProductds.Where(y => y == x.Id).Count())
+    </div>
+}
+else {
+    <div>
+        No Products in Carts
+    </div>
+}

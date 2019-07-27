@@ -1,0 +1,16 @@
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\ClothBazar.Entities.deps.json
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\ClothBazar.Entities.dll
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\ClothBazar.Entities.pdb
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.csprojAssemblyReference.cache
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.csproj.CoreCompileInputs.cache
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.AssemblyInfoInputs.cache
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.AssemblyInfo.cs
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.dll
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.pdb
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.dll
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.Configuration.dll
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.Security.dll
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.xml
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.Configuration.xml
+D:\visualProjects\CothBazar\ClothBazar.Entities\bin\Debug\netstandard2.0\System.Security.xml
+D:\visualProjects\CothBazar\ClothBazar.Entities\obj\Debug\netstandard2.0\ClothBazar.Entities.csproj.CopyComplete

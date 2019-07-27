@@ -1,0 +1,122 @@
+﻿@model ClothBazar.Entities.Requestclass
+
+
+@{
+    ViewBag.Title = "StoreToDispensaries";
+    var imageUrl = "/Content/images/pattern/3.png";
+    var v = Model.Drugs;
+}
+
+@*<h2>Drug Create</h2>
+
+    <form id="createTable">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @*<div class="form-group">
+                    <label>Date</label>
+                    <input class="form-control" name="Date" /><br />
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>@Model.Date</label>
+                    </div>
+                </div>
+
+                @foreach (var val in Model.drugs)
+                {
+
+                    @*<div class="form-group">
+                        <label>@val.Name</label>
+                        <input class="form-control" name="ServiceAmount" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <label>@val.Name</label>
+                            <input value="@val.ServiceAmount"/>
+                        </div>
+                    </div>
+
+                }
+
+
+                <button id="savebtn" class="btn btn-primary" type="button">Create</button>
+                <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+            </div>
+
+
+
+        </div>
+
+    </form>*@
+
+@using (Html.BeginForm("StoreToDispesaries", "Drug"))
+{
+    @Html.LabelFor(x => x.Date)
+    @Html.TextBoxFor(x => x.Date)
+
+    for (var i = 0; i < Model.Drugs.Count; i++)
+    {
+
+        @Html.LabelFor(x => x.Drugs[i].DrugName)
+        @Html.TextBoxFor(x => x.Drugs[i].DrugName)
+
+        @Html.LabelFor(x => x.Drugs[i].Amount)
+        @Html.TextBoxFor(x => x.Drugs[i].Amount)
+
+
+
+    }
+
+    <input type="submit" value="Submit" id="sub" />
+}
+
+@*<form >
+
+        <label>Catagories</label>
+        <select name="catagoryId">
+
+            @foreach (var catagory in Model) {
+                <option value="@catagory.Id">@catagory.name</option>
+            }
+
+        </select>
+
+        <label>Name</label>
+        <input name="name" /><br />
+
+        <label>Description</label>
+        <input name="Description" /><br />
+
+        <label>Price</label>
+        <input name="Price" /><br />
+
+        <button id="savebtn" type="button">Create</button>
+    </form>*@
+
+<script>
+    //debugger
+    //$("#sub").click(function () {
+
+    //    .done(function (response) {
+    //        alert(response);
+    //        $("#tableContainer").html(response);
+    //        $("#actionContainer").html("");
+    //        focusAction("tableContainer");
+    //    })
+    //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+    //            alert("Fail");
+    //        });
+    //});
+
+            //$("#cancelbtn").click(function () {
+            //    $("#actionContainer").html("");
+            //    focusAction("tableContainer");
+            //});
+
+</script>
+
+

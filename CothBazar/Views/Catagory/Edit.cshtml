@@ -1,0 +1,117 @@
+﻿@model ClothBazar.Entities.Catagory
+@{
+    ViewBag.Title = "Edit";
+    var TrueChecked = Model.isFeatured ? "checked" : string.Empty;
+    var FalseChecked = !Model.isFeatured ? "checked" : string.Empty;
+    var img = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/pattern/3.png";
+}
+
+<h2>Edit</h2>
+
+
+<form id="editTable">
+    <input type="hidden" name="Id" value="@Model.Id"></input>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input name="name" value="@Model.name" /><br />
+            </div>
+
+
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" value="@Model.Description" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Image</label>
+                <input name="ImageURL" id="imageURL" type="hidden" value="@Model.ImageURL" />
+                <input type="file" accept=".png,.jpg" name="image" id="imageUpload" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>is Featured</label>
+                <input name="isFeatured" type="radio" value="True" @TrueChecked />true
+                <input name="isFeatured" type="radio" value="False" @FalseChecked />false
+            </div>
+
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <img id="imgCatagory" src="@img" />
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <button type="button" id="update">Update</button>
+</form>
+
+<script>
+
+    $("#imageUpload").change(function () {
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/Shared/UploadImages',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData:false
+        })
+        .done(function (response) {
+            //alert(response);
+            console.log(response);
+            if (response.Success) {
+
+                $("#imageURL").val(response.ImageURL);
+                $("#imgCatagory").attr("src", response.ImageURL);
+            }
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+
+    });
+
+    $("#update").click(function () {
+        $.ajax({
+            type: "POST",
+            url:'@Url.Action("Edit","Catagory")',
+                //'/Catagory/Edit',
+            data: $("#editTable").serialize()
+        })
+            .done(function (response) {
+                //alert(response);
+                $("#tableContainer").html(response);
+                $("#actionContainer").html("");
+                focusAction("tableContainer");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+</script>

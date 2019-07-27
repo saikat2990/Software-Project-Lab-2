@@ -1,0 +1,147 @@
+﻿@model List<ClothBazar.Entities.Catagory>
+
+@{
+    ViewBag.Title = "Create";
+    var imageUrl = "/Content/images/pattern/3.png";
+}
+
+<h2>Product Create</h2>
+
+
+<form id="createTable">
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="form-group">
+                <label>Catagories</label>
+                <select class="form-control" name="catagoryId">
+
+                    @foreach (var catagory in Model)
+                    {
+                        <option value="@catagory.Id">@catagory.name</option>
+                    }
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" name="name" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input class="form-control" name="Price" /><br />
+            </div>
+
+            <label>Image</label>
+            <input name="imgURL" id="imageURL" type="hidden" />
+            <input type="file" accept=".png,.jpg" name="image" id="imageUpload" /><br />
+
+
+            <button id="savebtn" class="btn btn-primary" type="button">Create</button>
+            <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="thumb">
+                <img class="img-thumbnail img-fluid" id="productImage" name="imgUrl" src="@imageUrl"/>
+            </div>
+        </div>
+
+    </div>
+    
+</form>
+
+@*<form >
+
+    <label>Catagories</label>
+    <select name="catagoryId">
+
+        @foreach (var catagory in Model) {
+            <option value="@catagory.Id">@catagory.name</option>
+        }
+
+    </select>
+
+    <label>Name</label>
+    <input name="name" /><br />
+
+    <label>Description</label>
+    <input name="Description" /><br />
+
+    <label>Price</label>
+    <input name="Price" /><br />
+
+    <button id="savebtn" type="button">Create</button>
+</form>*@
+
+<script>
+
+    $("#imageUpload").change(function () {
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/Shared/UploadImages',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+                //alert(response);
+                console.log(response);
+                if (response.Success) {
+
+                    $("#imageURL").val(response.ImageURL);
+                    $("#productImage").attr("src", response.ImageURL);
+                }
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+
+    });
+
+
+    $("#savebtn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: '/Product/Create',
+            data: $("#createTable").serialize()
+        })
+        .done(function (response) {
+            //alert(response);
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $("#cancelbtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>

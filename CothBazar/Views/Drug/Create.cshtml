@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    var imageUrl = "/Content/images/pattern/3.png";
+}
+
+<h2>Drug Create</h2>
+
+<form id="createTable">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" name="Name" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>DespensaryAmount</label>
+                <input class="form-control" name="DespensaryAmount" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>StoreHouseAmount</label>
+                <input class="form-control" name="StoreHouseAmount" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>StudentSeriveAmount</label>
+                <input class="form-control" name="StudentSeriveAmount" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>StafftSeriveAmount</label>
+                <input class="form-control" name="StafftSeriveAmount" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>PricePerTab</label>
+                <input class="form-control" name="PricePerTab" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>ProductionDate</label>
+                <input class="form-control" name="ProductionDate" /><br />
+            </div>
+
+            <div class="form-group">
+                <label>ExpireDate</label>
+                <input class="form-control" name="ExpireDate" /><br />
+            </div>
+
+
+
+            <button id="savebtn" class="btn btn-primary" type="button">Create</button>
+            <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+
+
+    </div>
+
+</form>
+
+@*<form >
+
+        <label>Catagories</label>
+        <select name="catagoryId">
+
+            @foreach (var catagory in Model) {
+                <option value="@catagory.Id">@catagory.name</option>
+            }
+
+        </select>
+
+        <label>Name</label>
+        <input name="name" /><br />
+
+        <label>Description</label>
+        <input name="Description" /><br />
+
+        <label>Price</label>
+        <input name="Price" /><br />
+
+        <button id="savebtn" type="button">Create</button>
+    </form>*@
+
+<script>
+
+    $("#savebtn").click(function () {
+        $.ajax({
+            type: "POST",
+            url: '/Drug/Create',
+            data: $("#createTable").serialize()
+        })
+        .done(function (response) {
+            alert(response);
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $("#cancelbtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>
+

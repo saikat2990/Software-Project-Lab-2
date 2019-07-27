@@ -1,0 +1,127 @@
+﻿@model ClothBazar.Entities.DispensaryDrugTable
+@{
+    ViewBag.Title = "Service Page";
+    var imageUrl = "/Content/images/pattern/3.png";
+    
+}
+
+<h2>Service Create</h2>
+
+@*<p>
+        @Html.ActionLink("Dispensary", "Create")
+    </p>*@
+
+
+<form id="createTable">
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="editor-field">
+                <label>Name</label>
+                <input class="form-control" name="Name" /><br />
+                @*@Html.EditorFor(Model => Model.Name)*@
+            </div>
+
+            <div class="form-group">
+                <label>TotalAmount</label>
+                <input class="form-control" name="TotalAmount" /><br />
+                @*@Html.EditorFor(Model => Model.Email)*@
+            </div>
+
+            <div class="form-group">
+                <label>ServiceAmount</label>
+                <input class="form-control" name="ServiceAmount" /><br />
+                @*@Html.EditorFor(Model => Model.SerialNum)*@
+            </div>
+
+            <div class="form-group">
+                <label>RemainAmount</label>
+                <input class="form-control" name="RemainAmount" /><br />
+                @*@Html.EditorFor(Model => Model.Problem)*@
+            </div>
+
+            <div class="form-group">
+                <label>StafftSeriveAmount</label>
+                <input class="form-control" name="StafftSeriveAmount" /><br />
+                @*@Html.EditorFor(Model => Model.Date)*@
+            </div>
+
+
+            <div class="form-group">
+                <label>PricePerTab</label>
+                <input class="form-control" name="PricePerTab"><br />
+                @*@Html.EditorFor(Model => Model.DoctorName)*@
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description"><br />
+                @*@Html.EditorFor(Model => Model.DoctorName)*@
+            </div>
+
+            <div class="form-group">
+                <label>ProductionDate</label>
+                <input class="form-control" name="ProductionDate"><br />
+                @*@Html.EditorFor(Model => Model.DoctorName)*@
+            </div>
+
+
+            <div class="form-group">
+                <label>ExpireDate</label>
+                <input class="form-control" name="ExpireDate"><br />
+                @*@Html.EditorFor(Model => Model.DoctorName)*@
+            </div>
+
+
+            @*@for (int i = 0; i < Model.DrugService.Count; i++)
+        {
+            <div class="editor-field">
+                @Html.DisplayFor(m => m.DrugService[i].Name)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(m => m.DrugService[i].ServiceAmount)
+            </div>
+
+
+        }*@
+
+            <button id="savebtn" class="btn btn-primary" type="button">Create</button>
+            <button id="cancelbtn" class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+        <div class="col-md-4">
+
+        </div>
+
+    </div>
+
+</form>
+
+<form id="selectTable"></form>
+<script>
+
+    $("#savebtn").click(function () {
+        $.ajax({
+            url: '/DispensariesDrug/Create',
+            type: "POST",
+            data: $("#createTable").serialize()
+        })
+        .done(function (response) {
+            alert(response);
+            $("#tableContainer").html(response);
+            $("#actionContainer").html("");
+            focusAction("tableContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Wrong");
+        });
+    });
+    $("#cancelbtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>

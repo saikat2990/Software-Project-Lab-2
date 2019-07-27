@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2> Catagory Create</h2>
+
+<form id="catagoryCreateTable">
+
+
+    <label>Name</label><span class="text-danger">*</span>
+    <input name="name" /><br />
+
+    <label>Description</label>
+    <input name="Description" /><br />
+
+    <label>Image</label>
+    <input name="ImageURL" id="imageURL" type="hidden" />
+    <input type="file" accept=".png,.jpg" name="image" id="imageUpload" /><br />
+
+    <img id="imgCatagory" />
+
+    <label>is Featured</label>
+    <input name="isFeatured" type="radio" value="True" />true
+    <input name="isFeatured" type="radio" value="False" />false
+
+    <button type="button" id="savebtn" class="btn btn-primary">Create</button>
+    <button type="button" id="cancelbtn" class="btn btn-primary">Cancel</button>
+</form>
+
+<script>
+
+    $("#imageUpload").change(function () {
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/Shared/UploadImages',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData:false
+        })
+        .done(function (response) {
+            //alert(response);
+            console.log(response);
+            if (response.Success) {
+
+                $("#imageURL").val(response.ImageURL);
+                $("#imgCatagory").attr("src", response.ImageURL);
+            }
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+
+    });
+
+
+    $('#catagoryCreateTable').validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+            },
+            Description: {
+                maxlength: 500
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum Length is 5',
+                maxlength: 'Maximum Length is 50'
+            },
+            Description: {
+                maxlength: 'Maximum Length is 500'
+            }
+        }
+    });
+
+
+    $("#savebtn").click(function () {
+
+        if ($("#catagoryCreateTable").valid()) {
+
+            $.ajax({
+                type: "POST",
+                url: '/Catagory/Create',
+                data: $("#catagoryCreateTable").serialize()
+            })
+                .done(function (response) {
+                    //alert(response);
+                    $("#tableContainer").html(response);
+                    $("#actionContainer").html("");
+                    focusAction("tableContainer");
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal({
+                        title: "Warning?",
+                        text: "PLease enter all required field!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    });
+                });
+
+        } else {
+
+            swal({
+                title: "Warning?",
+                text: "PLease enter all required field!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+
+        }
+
+    });
+
+
+    $("#cancelbtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+
+</script>

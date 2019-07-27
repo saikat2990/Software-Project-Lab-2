@@ -1,0 +1,215 @@
+﻿@model ClothBazar.Entities.CatagorySearchViewModel
+
+@{
+    ViewBag.Title = "CatagoryTable";
+    var catagories = Model.Catagories;
+}
+
+<h2>CatagoryTable</h2>
+ 
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <input id="catagorysearchtxt" style="width:90%; height:40px;"  name="Search" />
+
+        </form>
+    </div>
+    <div class="col-md-4">
+        <button id="catagorysearch" type="button">Search</button>
+        <button id="reset" type="button">Reset</button>
+        <button id="catagorynewbtn">New</button>
+    </div>
+
+</div>
+<div>
+    <table class="table table-striped">
+
+        <thead class="thead-dark">
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Descripsion</td>
+                <td>Image URL</td>
+                <td>Is Featured</td>
+                <td>Actions</td>
+            </tr>
+
+        </thead>
+        <tbody>
+
+            @foreach (var catagory in catagories)
+            {
+                <tr>
+                    <td>@catagory.Id</td>
+                    <td>@catagory.name</td>
+                    <td>@catagory.Description</td>
+                    <td>
+                        @if (catagory.ImageURL != null)
+                        {
+                            <text>@catagory.ImageURL</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>@catagory.isFeatured</td>
+                    <td>
+                        <button class="Edit" data-id="@catagory.Id">Edit</button>
+                        <button class="Delete" data-id="@catagory.Id">Delete</button>
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+
+    </table>
+
+    <div>
+        @if (Model.Pager != null)
+        { 
+            if (Model.Pager.CurrentPage > 1)
+            {
+                <button class="pageMove" data-pageno="1"> FirstPage</button>
+                <button class="pageMove" data-pageno="@(Model.Pager.CurrentPage-1)">PreviousPage</button>
+
+            }
+
+            for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++ ) {
+                string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;          
+                <button class="@activeClass pageMove" data-pageno="@page">@page</button>
+            }
+
+            if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <button class="pageMove" data-pageno="@(Model.Pager.CurrentPage+1)">Next</button>
+                <button class="pageMove" data-pageno="@Model.Pager.EndPage">Last</button>
+            }
+
+        }
+    </div>
+</div>
+
+
+<script>
+
+
+    $(".pageMove").click(function () {
+
+        $.ajax({
+            url: '/Catagory/CatagoryTable',
+            data: {
+                pageNo: $(this).attr("data-pageno"),
+               // search: $("#catagorysearchtxt").val()
+               search: '@Model.SearchTerm'
+            }
+        })
+            .done(function (response) {
+                //alert(response);
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+    $("#catagorysearch").click(function () {
+
+        var value = $("#catagorysearchtxt").val();
+
+
+        $.ajax({
+            url: '@Url.Action("CatagoryTable","Catagory")',
+            //'/Catagory/CatagoryTable',
+            data: {
+                search: value
+            }
+        })
+        .done(function (response) {
+            //alert(response);
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $("#reset").click(function () {
+
+        $.ajax({
+            url: '@Url.Action("CatagoryTable","Catagory")',
+            //'/Catagory/CatagoryTable',
+        })
+        .done(function (response) {
+            //alert(response);
+            $("#tableContainer").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+
+
+    $("#catagorynewbtn").click(function () {
+
+        $.ajax({
+            url: '/Catagory/Create',
+        })
+        .done(function (response) {
+            alert(response);
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $(".Edit").click(function () {
+
+        $.ajax({
+            url: '/Catagory/Edit',
+            data: {
+                Id: $(this).attr("data-id")
+            }
+        })
+        .done(function (response) {
+            //alert(response);
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $(".Delete").click(function () {
+
+        var confirmDelete = confirm("Are you sure ,You want to delete the product");
+
+        if (confirmDelete) {
+            $.ajax({
+                type: "POST",
+                url: '/Catagory/Delete',
+                data: {
+                    Id: $(this).attr("data-id")
+                }
+            })
+            .done(function (response) {
+                alert(response);
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+        }
+
+    });
+
+
+
+</script>

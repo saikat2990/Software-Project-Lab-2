@@ -123,7 +123,7 @@ namespace CothBazar.Controllers
                 SmtpClient client = new SmtpClient("smtp.gmail.com",587);
                 client.EnableSsl = true;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.Credentials = new NetworkCredential("bsse0910@iit.du.ac.bd","masksenma");
+                client.Credentials = new NetworkCredential("bsse0910@iit.du.ac.bd","");
                 MailMessage msg = new MailMessage();
                 msg.To.Add(appointmentList1.Email);
                 msg.From = new MailAddress(appointmentList1.Email);
